@@ -13,9 +13,10 @@ def main():
   slices_per_person = get_slices_per_person()
   slices_per_pizza = get_slices_per_pizza()
   num_slices = num_people * slices_per_person # total number of slices needed
-  num_pizzas_w_remainder = calc_pizzas(num_slices, slices_per_pizza) #calculates number of wwhole pizas needed
-  print("You need " + str(num_pizzas_w_remainder[0]) + " pizzas to feed " + str(num_people) + " people.")
-  print("There will be " + str(num_pizzas_w_remainder[1]) + " leftover slices.")
+  #next time will use math.ceil to calculate total pizzas needed
+  num_pizzas_w_remainder = calc_pizzas(num_slices, slices_per_pizza) #calculates number of whole pizas needed
+  print("You need ", num_pizzas_w_remainder[0], " pizzas to feed ", num_people, " people.")
+  print("There will be ", num_pizzas_w_remainder[1], " leftover slices.")
   restart_script()
 
 #Get number of people to feed as an int, restart if incorrect input.
@@ -48,6 +49,7 @@ def get_slices_per_pizza():
 
 #Take number of slices and slices per pizza as input to calculate number of whole pizzas needed.
 #Also returns number of lslices left in the final pizza after everyone is fed.
+#next time will use math.ceil to calculate total pizzas needed
 def calc_pizzas(num_slices, slices_per_pizza):
   num_pizzas = num_slices / slices_per_pizza
   remaining_slices_needed = num_slices % slices_per_pizza
@@ -63,7 +65,7 @@ def restart_script():
   print("\nRestarting script...")
   for i in range(3,0,-1): #countdown from 3 to 1 before restarting
     sleep(1.0) #wait 1 second
-    print(str(i) + "...")
+    print(i, "...", sep="")
   os.execv(sys.executable, ['python3'] + sys.argv) # restart script
 
 main()
