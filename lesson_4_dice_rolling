@@ -1,0 +1,65 @@
+# Exercise goal: write a dice-rolling program from scratch
+# roll_die() should take one parameter: sides and return a random roll between 1 and sides
+# main() should call roll_die() 3 times and keep a tally of the total
+# print value of roll, number of rolls, and total after each roll
+
+# optional afterthought, add input for number of die and option to output average of rolls, highest roll, lowest roll
+
+import sys
+import os
+import random
+
+from time import sleep
+
+# Text color green using ANSI code
+def green(text):
+  str(text)
+  return "\033[92m {}\033[00m".format(text)
+
+def main():
+  total_values = 0
+  num_rolls = 0
+  num_sides = ask_user_sides()
+
+  #roll die 3 times per requirements. Could also add an input to get number of rolls user would like.
+  for i in range(0,3):
+    print("\nRolling...")
+    sleep(3.0)
+    value = roll_die(num_sides)
+    num_rolls += 1
+    total_values += value
+    #change the color of the value to green for better readability
+    text_value = green(value)
+    text_rolls = green(num_rolls)
+    text_values = green(total_values)
+    print("You rolled a ", text_value, " on roll ", text_rolls, " for a total of ", text_values, ".", sep="")
+    
+  again = input("\nWould you like to play again? (Y or N)")
+  if again == "Y" or again == "y":
+    restart()
+
+def roll_die(sides):
+  value = random.randint(1, sides)
+  return value
+
+def restart():
+  print("\nRestarting...")
+  #countdown before restarting
+  for i in range(3, 0, -1):
+    sleep(1.0)
+    print(i, "...", sep="")
+  #re-start script using same cmd line args(in this case args is only the script name)
+  os.execv(sys.executable, ["python3", "dice_roll.py"])
+
+def ask_user_sides():
+  num_sides = input("\nHow many sides are on the die? ")
+  # error handling. only continues if no exception was raised. otherwise, restart.
+  try:
+    int(num_sides)
+  except:
+    print("\nYou have entered an invalid answer. Please enter an integer.")
+    restart()
+  else:
+    return int(num_sides)
+
+main()
